@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"DB2/chord"
 	tp "DB2/transactionpackage"
 )
 
@@ -20,11 +21,20 @@ func sampleTrasactionData() tp.TransactionData {
 	return td
 }
 
-func main() {
+func pattern_mining() {
 	min_support := 0.5
 
 	trasaction_data := sampleTrasactionData()
 	fmt.Println(trasaction_data)
 
 	fmt.Println(trasaction_data.PickupFrequencyItemset(min_support))
+}
+
+func main() {
+	chord_network := chord.ChordNetwork{}
+	chord1 := chord.ConstructorChordNord(1, 8)
+	fmt.Println(chord1)
+	chord_network = chord_network.AddNode(chord1)
+	fmt.Println(chord_network)
+
 }
