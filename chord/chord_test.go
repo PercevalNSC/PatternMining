@@ -34,5 +34,17 @@ func TestChord(t *testing.T) {
 			}
 		})
 	})
+	t.Run("consisitency test", func(t *testing.T) {
+		if !chord_network.checkConsistency() {
+			t.Error(chord_network, chord_network.checkConsistency())
+		}
+	})
+	t.Run("construct from list", func(t *testing.T) {
+		int_list := []int{1, 8, 16}
+		cn_from_list := ChordNetworkFromList(int_list)
+		if !reflect.DeepEqual(chord_network, cn_from_list) {
+			t.Error(cn_from_list)
+		}
+	})
 
 }

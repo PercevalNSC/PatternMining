@@ -23,7 +23,7 @@ func (chord_network *ChordNetwork) checkConsistency() bool {
 	end := chord_network.node_list[0].end
 	var node ChordNord
 
-	for i := 1; i < len(chord_network.node_list)-1; i++ {
+	for i := 1; i < len(chord_network.node_list); i++ {
 		node = chord_network.node_list[i]
 		start = node.start
 		if start != end {
@@ -79,7 +79,7 @@ func ChordNetworkFromList(nord_num_list []int) ChordNetwork {
 
 		end = nord_num
 		new_nord = ConstructorChordNord(start, end)
-		chord_network.AddNode(new_nord)
+		chord_network = chord_network.AddNode(new_nord)
 
 		start = nord_num
 	}
