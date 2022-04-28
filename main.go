@@ -32,7 +32,7 @@ func pattern_mining() {
 
 func main() {
 	chord_network := chord.ChordNetwork{}
-	chord1 := chord.ConstructorChordNord(1, 8)
+	chord1 := chord.ConstructorChordNord(8)
 	fmt.Println(chord1)
 	chord_network = chord_network.AddNode(chord1)
 	fmt.Println(chord_network)
