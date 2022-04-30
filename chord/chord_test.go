@@ -13,8 +13,10 @@ var node_1_2_push = ChordNetwork{[]ChordNord{node1, node2}}
 var node_1_2_link = ChordNetwork{[]ChordNord{{1, 8, nil}, {8, 1, nil}}}
 var node3 = ChordNord{3, 0, nil}
 var node_1_2_3 = ChordNetwork{[]ChordNord{{1, 3, nil}, {3, 8, nil}, {8, 1, nil}}}
-var list1 = []int{3, 8}
-var list2 = []int{8, 3}
+var construct_list = [][]int{
+	{3, 8},
+	{3, 8},
+}
 var hash_list = []int{8, 14, 21, 32, 38, 42, 48, 53, 66}
 var index_pairs = []map[string]int{
 	{"index": 1, "node": 8},
@@ -58,19 +60,14 @@ func TestChord(t *testing.T) {
 		}
 	})
 	t.Run("construct from list", func(t *testing.T) {
-		t.Run("ordered list", func(t *testing.T) {
-			cn_from_list := ChordNetworkFromList(list1)
-			if !reflect.DeepEqual(chord_network, cn_from_list) {
-				t.Error(chord_network, ":", cn_from_list)
-			}
-		})
-		t.Run("unorderd_list", func(t *testing.T) {
-			cn_from_list := ChordNetworkFromList(list2)
-			if !reflect.DeepEqual(chord_network, cn_from_list) {
-				t.Error(chord_network, ":", cn_from_list)
-			}
-		})
-
+		for i, test_case := range construct_list {
+			t.Run("testcase"+strconv.Itoa(i), func(t *testing.T) {
+				cn_from_list := ChordNetworkFromList(test_case)
+				if !reflect.DeepEqual(chord_network, cn_from_list) {
+					t.Error(chord_network, ":", cn_from_list)
+				}
+			})
+		}
 	})
 
 	chord_network = ChordNetworkFromList(hash_list)
@@ -87,4 +84,6 @@ func TestChord(t *testing.T) {
 		}
 	})
 
+	chord_network.generateCashe(5)
+	fmt.Println(chord_network)
 }
