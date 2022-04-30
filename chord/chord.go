@@ -1,6 +1,8 @@
 package chord
 
 import (
+	"fmt"
+	"math"
 	"sort"
 )
 
@@ -108,6 +110,14 @@ func (cn *ChordNetwork) linkNode() {
 }
 
 func (cn *ChordNetwork) SearchNodeIndex(target_index int) int {
+	if cn.node_list[0].cache == nil {
+		return cn.searchNodeIndexNoCashe(target_index)
+	} else {
+		return cn.searchNodeIndexCashe(target_index)
+	}
+}
+
+func (cn *ChordNetwork) searchNodeIndexNoCashe(target_index int) int {
 	var old_index, new_index int
 	old_index = cn.node_list[0].isIndexInNode(target_index)
 
@@ -116,6 +126,7 @@ func (cn *ChordNetwork) SearchNodeIndex(target_index int) int {
 			continue
 		}
 
+		// if old_node_index and now_node_index is equal, the index is in the now_node.
 		new_index = node.isIndexInNode(target_index)
 		if old_index == new_index {
 			return old_index
@@ -124,4 +135,19 @@ func (cn *ChordNetwork) SearchNodeIndex(target_index int) int {
 		}
 	}
 	return cn.node_list[0].end
+}
+
+func (cn *ChordNetwork) searchNodeIndexCashe(target_index int) int {
+	return 0
+}
+
+func (cn *ChordNetwork) generateCashe(cashe_size int) {
+	for i, node := range cn.node_list {
+		node_index := node.end
+		for j := 0; j < cashe_size; j++ {
+			target_index := node_index + int(math.Pow(2, float64(j)))
+			fmt.Println(target_index, cn.SearchNodeIndex(target_index))
+			cn.node_list[i].cache = append(cn.node_list[i].cache, cn.SearchNodeIndex(target_index))
+		}
+	}
 }
